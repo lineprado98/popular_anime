@@ -4,6 +4,8 @@ class Anime {
   const Anime({required this.title, required this.image});
 
   factory Anime.fromJson(Map<String, dynamic> json) {
-    return Anime(title: json['title'], image: json['entry']['url']);
+    return Anime(
+        title: json['entry']['title'],
+        image: json['entry']['images']['jpg']['image_url']);
   }
 }
