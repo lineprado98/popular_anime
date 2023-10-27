@@ -45,15 +45,31 @@ mixin _$ListAnimeStore on _ListAnimeStoreBase, Store {
       Atom(name: '_ListAnimeStoreBase.response', context: context);
 
   @override
-  List<Anime> get response {
+  List<AnimeEntity> get response {
     _$responseAtom.reportRead();
     return super.response;
   }
 
   @override
-  set response(List<Anime> value) {
+  set response(List<AnimeEntity> value) {
     _$responseAtom.reportWrite(value, super.response, () {
       super.response = value;
+    });
+  }
+
+  late final _$changeStatusAtom =
+      Atom(name: '_ListAnimeStoreBase.changeStatus', context: context);
+
+  @override
+  bool get changeStatus {
+    _$changeStatusAtom.reportRead();
+    return super.changeStatus;
+  }
+
+  @override
+  set changeStatus(bool value) {
+    _$changeStatusAtom.reportWrite(value, super.changeStatus, () {
+      super.changeStatus = value;
     });
   }
 
@@ -72,7 +88,18 @@ mixin _$ListAnimeStore on _ListAnimeStoreBase, Store {
   }
 
   @override
-  void setResponse(List<Anime> value) {
+  void setChangeStatus(bool value) {
+    final _$actionInfo = _$_ListAnimeStoreBaseActionController.startAction(
+        name: '_ListAnimeStoreBase.setChangeStatus');
+    try {
+      return super.setChangeStatus(value);
+    } finally {
+      _$_ListAnimeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setResponse(List<AnimeEntity> value) {
     final _$actionInfo = _$_ListAnimeStoreBaseActionController.startAction(
         name: '_ListAnimeStoreBase.setResponse');
     try {
@@ -87,7 +114,8 @@ mixin _$ListAnimeStore on _ListAnimeStoreBase, Store {
     return '''
 isLoading: ${isLoading},
 isError: ${isError},
-response: ${response}
+response: ${response},
+changeStatus: ${changeStatus}
     ''';
   }
 }

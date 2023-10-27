@@ -1,14 +1,24 @@
-import 'dart:developer';
 import 'package:mobx/mobx.dart';
-import 'package:popular_anime/app/modules/anime/domain/entities/anime.dart';
+import 'package:popular_anime/app/core/exceptions/my_exception.dart';
+import 'package:popular_anime/app/modules/anime/domain/entities/anime_entity.dart';
+import 'package:popular_anime/app/modules/anime/domain/use_cases/remove_anime.dart';
+import 'package:popular_anime/app/modules/anime/domain/use_cases/find_all_favorites.dart';
 import 'package:popular_anime/app/modules/anime/domain/use_cases/list_animes.dart';
+import 'package:popular_anime/app/modules/anime/domain/use_cases/save_favorite.dart';
 part 'list_anime_store.g.dart';
 
 class ListAnimeStore = _ListAnimeStoreBase with _$ListAnimeStore;
 
 abstract class _ListAnimeStoreBase with Store {
   final ListAnimes usecase;
-  _ListAnimeStoreBase({required this.usecase});
+  final SaveFavorite saveCase;
+  final RemoveAnime removeCase;
+  final FindAllFavorites findCase;
+  _ListAnimeStoreBase(
+      {required this.usecase,
+      required this.saveCase,
+      required this.removeCase,
+      required this.findCase});
 
   @observable
   bool isLoading = true;
@@ -25,17 +35,49 @@ abstract class _ListAnimeStoreBase with Store {
   }
 
   @observable
-  List<Anime> response = [];
+  List<AnimeEntity> response = [];
+
+  @observable
+  bool changeStatus = false;
 
   @action
-  void setResponse(List<Anime> value) {
-    response = value;
+  void setChangeStatus(bool value) {
+    changeStatus = value;
+  }
+
+  @action
+  void setResponse(List<AnimeEntity> value) {
+    response.clear();
+    response.addAll(value);
   }
 
   Future<void> getListAnimes() async {
-    final List<Anime> res = await usecase.getListAnimes();
-    print(inspect(res));
-    setResponse(res);
+    seIsLoading(true);
+    final (anime, exception) = await usecase.getListAnimes();
+
+    if (exception != null) {
+      if (exception is InternalError) {
+        setIsError(true);
+      }
+    }
+    setResponse(anime);
     seIsLoading(false);
+  }
+
+  Future<void> save({required AnimeEntity value}) async {
+    saveCase.save(value: value);
+  }
+
+  Future<void> listFavorites() async {
+    findCase.getAll();
+  }
+
+  Future<void> remove({required AnimeEntity value}) async {
+    removeCase.delete(value: value);
+  }
+
+  void setAsFavorite(int index, bool isFavorite) {
+    setChangeStatus(isFavorite);
+    response.elementAt(index).isFavorite = isFavorite;
   }
 }
