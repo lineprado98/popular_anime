@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 import 'package:popular_anime/app/core/exceptions/my_exception.dart';
 import 'package:popular_anime/app/modules/anime/domain/entities/anime_entity.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/remove_anime.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/find_all_favorites.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/list_animes.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/save_favorite.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/remove_anime.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/find_all_favorites.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/list_animes.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/save_favorite.dart';
 part 'list_anime_store.g.dart';
 
 class ListAnimeStore = _ListAnimeStoreBase with _$ListAnimeStore;
@@ -66,10 +66,6 @@ abstract class _ListAnimeStoreBase with Store {
 
   Future<void> save({required AnimeEntity value}) async {
     saveCase.save(value: value);
-  }
-
-  Future<void> listFavorites() async {
-    findCase.getAll();
   }
 
   Future<void> remove({required AnimeEntity value}) async {

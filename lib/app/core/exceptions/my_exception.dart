@@ -2,4 +2,4 @@ abstract class MyException {}
 
 class InternalError implements MyException {}
 
-class NotFound {}
+class NotFound implements MyException {}

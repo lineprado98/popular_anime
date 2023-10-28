@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:popular_anime/app/core/services/http/custom_http_response.dart';
-import 'i_http.dart';
+import 'i_http_service.dart';
 
-class HttpDioService implements IHttp {
+class HttpDioService implements IHttpService {
   final dio = Dio();
 
   @override

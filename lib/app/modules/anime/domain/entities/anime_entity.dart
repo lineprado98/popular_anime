@@ -1,7 +1,7 @@
 class AnimeEntity {
   final String title;
   final String image;
-  late bool isFavorite = false;
+  bool isFavorite = false;
   AnimeEntity(
       {required this.title, required this.image, required this.isFavorite});
 

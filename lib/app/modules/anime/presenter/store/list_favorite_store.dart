@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:popular_anime/app/modules/anime/domain/entities/anime_favorite_entity.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/find_all_favorites.dart';
-import 'package:popular_anime/app/modules/anime/domain/use_cases/remove_favorite.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/find_all_favorites.dart';
+import 'package:popular_anime/app/modules/anime/domain/usecases/remove_favorite.dart';
 part 'list_favorite_store.g.dart';
 
 class ListFavoriteStore = _ListFavoriteStoreBase with _$ListFavoriteStore;
